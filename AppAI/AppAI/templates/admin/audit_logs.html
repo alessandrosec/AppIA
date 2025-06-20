@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Logs de Auditoría{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Logs de Auditoría</h2>
+    <a href="{{ url_for('admin.lista_usuarios') }}" class="btn btn-secondary">Volver a Gestión de Usuarios</a>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+{% if logs %}
+<div class="table-responsive">
+    <table class="data-table audit-logs-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha/Hora</th>
+                <th>Usuario (ID)</th>
+                <th>Nombre Usuario</th>
+                <th>Tipo de Acción</th>
+                <th>Descripción</th>
+                <th>IP</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.id }}</td>
+                <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ log.user_id if log.user_id else 'N/A' }}</td>
+                <td>{{ log.username if log.username else 'Anónimo' }}</td>
+                <td><span class="action-type-badge action-{{ log.action_type | lower | replace('_', '-') }}">{{ log.action_type | replace('_', ' ') }}</span></td>
+                <td>{{ log.description }}</td>
+                <td>{{ log.ip_address }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <p class="no-data">No hay registros de auditoría aún.</p>
+{% endif %}
+
+<style>
+    /* Estilos para los badges de tipos de acción */
+    .action-type-badge {
+        display: inline-block;
+        padding: 3px 6px;
+        border-radius: 3px;
+        font-size: 0.75em;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: white; /* Color de texto predeterminado para badges */
+    }
+
+    .action-login-success { background-color: #28a745; } /* Verde para éxito */
+    .action-login-failed { background-color: #dc3545; } /* Rojo para fallo */
+    .action-logout { background-color: #6c757d; } /* Gris para logout */
+    .action-create-becario-success, .action-create-user-success, .action-excel-becario-inserted { background-color: #007bff; } /* Azul para creación/inserción */
+    .action-update-becario-success, .action-update-user-success { background-color: #ffc107; color: #333; } /* Naranja para actualización */
+    .action-delete-becario-success, .action-delete-user-success { background-color: #dc3545; } /* Rojo para eliminación */
+    .action-fraud-detection-create-becario, .action-fraud-detected-excel-insertion { background-color: #fd7e14; } /* Naranja oscuro para fraude */
+    .action-excel-upload-summary { background-color: #17a2b8; } /* Turquesa para resumen de carga */
+    .action-excel-upload-failed, .action-excel-process-error, 
+    .action-create-becario-failed, .action-create-user-failed,
+    .action-update-becario-failed, .action-update-user-failed,
+    .action-delete-becario-failed, .action-delete-user-failed { background-color: #6f42c1; } /* Púrpura para errores específicos */
+    .action-view-user-list, .action-view-audit-logs, .action-view-becario-detail { background-color: #6f74a7; } /* Azul violeta para vistas */
+
+    /* Tabla de logs */
+    .audit-logs-table th, .audit-logs-table td {
+        padding: 8px 12px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+        word-break: break-word; /* Romper palabras largas */
+    }
+
+    .audit-logs-table th {
+        background-color: var(--header-bg-color);
+        color: var(--header-text-color);
+        font-weight: 600;
+    }
+
+    .audit-logs-table tbody tr:nth-child(even) {
+        background-color: var(--secondary-bg-color);
+    }
+</style>
+{% endblock %}

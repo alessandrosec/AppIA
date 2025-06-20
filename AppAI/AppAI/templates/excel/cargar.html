@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Cargar Becarios desde Excel{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Cargar Becarios desde Excel</h2>
+    <p class="description">Sube un archivo Excel (.xlsx o .xls) con la información de los nuevos postulantes. El sistema validará y registrará los datos, evitando duplicados y alertando sobre posibles fraudes (personas ya registradas o ex-IRSI).</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" enctype="multipart/form-data" class="excel-upload-form">
+        <div class="form-group">
+            <label for="file">Seleccionar archivo Excel:</label>
+            <input type="file" id="file" name="file" accept=".xlsx, .xls" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Cargar Archivo</button>
+    </form>
+
+    <div class="excel-format-info">
+        <h3>Formato de Excel Esperado:</h3>
+        <p>Asegúrate de que tu archivo Excel tenga las siguientes columnas en este orden (la primera fila es el encabezado, ignorada por el sistema):</p>
+        <div class="table-responsive">
+            <table class="data-table small-header">
+                <thead>
+                    <tr>
+                        <th>NOMBRES</th>
+                        <th>APELLIDOS</th>
+                        <th>TITULO</th>
+                        <th>FECHA_NACIMIENTO (YYYY-MM-DD)</th>
+                        <th>CORREO_PERSONAL</th>
+                        <th>CORREO_INSTITUCIONAL</th>
+                        <th>TELEFONO</th>
+                        <th>DIRECCION</th>
+                        <th>PAIS_ORIGEN</th>
+                        <th>NACIONALIDAD</th>
+                        <th>HISTORIAL_CIBERSEGURIDAD</th>
+                        <th>ES_EX_IRSI (1/0 o Sí/No)</th>
+                        <th>FECHA_INGRESO_IRSI (YYYY-MM-DD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Juan Carlos</td>
+                        <td>Pérez García</td>
+                        <td>Ingeniero de Sistemas</td>
+                        <td>1990-05-20</td>
+                        <td>juan.perez@example.com</td>
+                        <td>juan.perez@universidad.edu</td>
+                        <td>+50212345678</td>
+                        <td>Calle Falsa 123</td>
+                        <td>Guatemala</td>
+                        <td>Guatemalteco</td>
+                        <td>Curso de Redes Cisco, Certificación CompTIA Security+</td>
+                        <td>0</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>Los campos `Titulo`, `CorreoPersonal`, `CorreoInstitucional`, `Telefono`, `Direccion`, `PaisOrigen`, `Nacionalidad`, `HistorialCiberseguridad`, `FechaIngresoIRSI` son opcionales. `Nombres`, `Apellidos` y `FechaNacimiento` son obligatorios para el control de fraude.</p>
+    </div>
+
+    {% if fraud_detections %}
+    <div class="fraud-alerts">
+        <h3>Posibles Fraudes / Ex-IRSI Detectados en la Carga</h3>
+        <p>Los siguientes registros del archivo Excel no fueron procesados porque ya existen en la base de datos o son ex-becarios IRSI:</p>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Fecha Nacimiento</th>
+                        <th>¿Ex-IRSI en DB?</th>
+                        <th>ID en DB</th>
+                        <th>Motivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detection in fraud_detections %}
+                    <tr>
+                        <td>{{ detection.nombres }}</td>
+                        <td>{{ detection.apellidos }}</td>
+                        <td>{{ detection.fecha_nacimiento }}</td>
+                        <td>{{ 'Sí' if detection.es_ex_irsi_db else 'No' }}</td>
+                        <td>{{ detection.id_db }}</td>
+                        <td>{{ detection.motivo }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

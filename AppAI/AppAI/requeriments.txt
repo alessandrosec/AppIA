@@ -1,0 +1,5 @@
+Flask==2.3.2 # O la versión más reciente compatible
+pyodbc==4.0.39 # Para conectar a MSSQL
+Flask-Login==0.6.2 # Para gestión de usuarios y sesiones
+python-dotenv==1.0.0 # Para cargar variables de entorno (seguridad)
+openpyxl==3.1.2

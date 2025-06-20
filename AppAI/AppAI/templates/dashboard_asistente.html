@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Asistente{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Panel de Asistente</h2>
+    <p>Bienvenido, {{ current_user.username }}. Aquí puedes gestionar los expedientes de los postulantes.</p>
+
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>Gestión de Becarios</h3>
+            <p>Ver, añadir, editar y eliminar expedientes de becarios.</p>
+            <a href="#" class="btn btn-primary">Ir a Becarios</a>
+        </div>
+        <div class="card">
+            <h3>Carga de Datos (Excel)</h3>
+            <p>Importar nuevos postulantes desde archivos Excel.</p>
+            <a href="#" class="btn btn-primary">Cargar Excel</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Consulta{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Panel de Consulta</h2>
+    <p>Bienvenido, {{ current_user.username }}. Puedes consultar expedientes existentes.</p>
+
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>Consultar Becarios</h3>
+            <p>Buscar y ver detalles de expedientes de becarios.</p>
+            <a href="#" class="btn btn-primary">Buscar Becario</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

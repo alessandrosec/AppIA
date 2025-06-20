@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión de Usuarios{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Gestión de Usuarios</h2>
+    {% if current_user.role == 'admin' %}
+    <a href="{{ url_for('admin.crear_usuario') }}" class="btn btn-primary">Añadir Nuevo Usuario</a>
+    {% endif %}
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+{% if users %}
+<div class="table-responsive">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td><span class="role-badge role-{{ user.role }}">{{ user.role.capitalize() }}</span></td>
+                <td>
+                    {% if current_user.role == 'admin' %}
+                    <a href="{{ url_for('admin.editar_usuario', user_id=user.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ url_for('admin.eliminar_usuario', user_id=user.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este usuario?');">
+                        <button type="submit" class="btn btn-danger btn-sm" {% if current_user.id == user.id %}disabled title="No puedes eliminar tu propia cuenta"{% endif %}>Eliminar</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <p class="no-data">No hay usuarios registrados aún.</p>
+{% endif %}
+{% endblock %}

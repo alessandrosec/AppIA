@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestión de Becas de Ciberseguridad{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('dashboard') }}">Gestión de Becas</a>
+                <ul class="nav-links">
+                    {% if current_user.is_authenticated %}
+                        <li><a href="#">Hola, {{ current_user.username }} ({{ current_user.role }})</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}" class="btn btn-logout">Cerrar Sesión</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('auth.login') }}">Iniciar Sesión</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container content">
+        {% block content %}{% endblock %}
+    </main>
+
+   <footer>
+    <div class="container">
+        <p>&copy; <span id="year"></span> Gestión de Becas de Ciberseguridad. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<!-- Agrega moment.js desde CDN -->
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+<script>
+    document.getElementById('year').innerText = moment().format('YYYY');
+</script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentYear = new Date().getFullYear();
+            const footerText = document.querySelector('footer p');
+            if (footerText) {
+                footerText.innerHTML = `&copy; ${currentYear} Gestión de Becas de Ciberseguridad. Todos los derechos reservados.`;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Admin{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Panel de Administración</h2>
+    <p>Bienvenido, {{ current_user.username }}. Aquí tienes acceso completo a todas las funcionalidades del sistema.</p>
+
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>Gestión de Usuarios</h3>
+            <p>Crear, editar y eliminar usuarios y asignar roles.</p>
+            <a href="{{ url_for('admin.lista_usuarios') }}" class="btn btn-primary">Ir a Usuarios</a>
+        </div>
+        <div class="card">
+            <h3>Gestión de Becarios</h3>
+            <p>Ver, añadir, editar y eliminar expedientes de becarios.</p>
+            <a href="{{ url_for('becario.lista_becarios') }}" class="btn btn-primary">Ir a Becarios</a>
+        </div>
+        <div class="card">
+            <h3>Carga de Datos (Excel)</h3>
+            <p>Importar nuevos postulantes desde archivos Excel.</p>
+            <a href="{{ url_for('excel.cargar_excel_becarios') }}" class="btn btn-primary">Cargar Excel</a>
+        </div>
+        <div class="card">
+            <h3>Reportes del Sistema</h3>
+            <p>Acceder a estadísticas y reportes globales.</p>
+            <a href="{{ url_for('admin.system_reports') }}" class="btn btn-primary">Ver Reportes</a> {# ENLACE ACTUALIZADO #}
+        </div>
+        <div class="card"> {# NUEVA TARJETA #}
+            <h3>Logs de Auditoría</h3>
+            <p>Revisar el registro de todas las actividades del sistema.</p>
+            <a href="{{ url_for('admin.view_audit_logs') }}" class="btn btn-primary">Ver Logs</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

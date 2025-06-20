@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Becarios{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Lista de Becarios</h2>
+    {% if current_user.role in ['admin', 'asistente'] %}
+    <a href="{{ url_for('becario.crear_becario') }}" class="btn btn-primary">Añadir Nuevo Becario</a>
+    {% endif %}
+    {% if current_user.role in ['admin', 'asistente'] %}
+    <a href="{{ url_for('excel.cargar_excel_becarios') }}" class="btn btn-primary">Cargar Excel</a>
+    {% endif %}
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+{% if becarios %}
+<div class="table-responsive">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Correo Personal</th>
+                <th>Fecha Nacimiento</th>
+                <th>Ex-IRSI</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for becario in becarios %}
+            <tr>
+                <td>{{ becario.id }}</td>
+                <td>{{ becario.nombres }}</td>
+                <td>{{ becario.apellidos }}</td>
+                <td>{{ becario.correo_personal or 'N/A' }}</td>
+                <td>{{ becario.fecha_nacimiento.strftime('%Y-%m-%d') if becario.fecha_nacimiento else 'N/A' }}</td>
+                <td>
+                    {% if becario.es_ex_irsi %}
+                        <span class="status-badge status-ex-irsi">Sí</span>
+                    {% else %}
+                        <span class="status-badge status-no-irsi">No</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('becario.detalle_becario', becario_id=becario.id) }}" class="btn btn-info btn-sm">Ver</a>
+                    {% if current_user.role in ['admin', 'asistente'] %}
+                    <a href="{{ url_for('becario.editar_becario', becario_id=becario.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                    {% endif %}
+                    {% if current_user.role == 'admin' %}
+                    <form action="{{ url_for('becario.eliminar_becario', becario_id=becario.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este becario?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <p class="no-data">No hay becarios registrados aún.</p>
+{% endif %}
+{% endblock %}

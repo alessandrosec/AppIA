@@ -1,0 +1,698 @@
+/* Variables CSS para colores */
+:root {
+    --primary-color: #2c3e50; /* Azul oscuro para encabezados/barras */
+    --secondary-color: #ecf0f1; /* Gris claro para fondos de secciones */
+    --accent-color: #3498db; /* Azul medio para acentos/botones */
+    --text-color: #34495e; /* Gris oscuro para texto general */
+    --light-text-color: #f8f9fa; /* Blanco/gris muy claro para texto sobre fondos oscuros */
+    --border-color: #bdc3c7; /* Gris para bordes sutiles */
+    --success-color: #2ecc71; /* Verde para mensajes de éxito */
+    --danger-color: #e74c3c; /* Rojo para mensajes de error */
+    --info-color: #3498db; /* Azul para mensajes informativos */
+    --warning-color: #f1c40f; /* Amarillo para mensajes de advertencia */
+    --bg-color: #f2f4f6; /* Fondo general de la página */
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    color: var(--light-text-color);
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    color: var(--light-text-color);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-logout {
+    background-color: var(--danger-color);
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+.btn-logout:hover {
+    background-color: darken(var(--danger-color), 10%); /* Esto no es CSS puro, usar un color más oscuro directamente */
+    background-color: #c0392b; /* Ejemplo de color más oscuro */
+}
+
+
+/* Contenido principal */
+.content {
+    flex: 1; /* Permite que el contenido ocupe el espacio disponible */
+    padding: 40px 20px;
+}
+
+/* Contenedor de autenticación (Login) */
+.auth-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 400px;
+    margin: 60px auto;
+    text-align: center;
+}
+
+.auth-container h2 {
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-size: 2em;
+    font-weight: 600;
+}
+
+/* Formularios */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1em;
+    color: var(--text-color);
+    background-color: #fcfcfc;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Sombra suave */
+    outline: none;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--light-text-color);
+}
+
+.btn-primary:hover {
+    background-color: #2980b9; /* Un tono más oscuro del azul de acento */
+    transform: translateY(-1px);
+}
+
+/* Mensajes Flash */
+.flashes {
+    list-style: none;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.flashes li {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.flashes .success {
+    background-color: var(--success-color);
+    color: var(--light-text-color);
+}
+
+.flashes .danger {
+    background-color: var(--danger-color);
+    color: var(--light-text-color);
+}
+
+.flashes .info {
+    background-color: var(--info-color);
+    color: var(--light-text-color);
+}
+
+.flashes .warning {
+    background-color: var(--warning-color);
+    color: var(--text-color); /* Texto oscuro para fondo amarillo */
+}
+
+/* Pie de página */
+footer {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto; /* Empuja el footer al final de la página */
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 0.9em;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Utlidades y adaptaciones */
+.mt-3 {
+    margin-top: 15px;
+}
+
+/* Dashboard Specific Styles */
+.dashboard-container {
+    padding: 30px 0;
+}
+
+.dashboard-container h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.2em;
+}
+
+.dashboard-container p {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+    color: var(--text-color);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    justify-content: center;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card h3 {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.card p {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-size: 0.95em;
+    line-height: 1.5;
+    text-align: center; /* Asegura que el texto dentro de la tarjeta esté centrado */
+}
+
+.card .btn {
+    width: 80%; /* Botón ocupa la mayor parte del ancho de la tarjeta */
+    padding: 10px 15px;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+/* Page Header for lists and forms */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.page-header h2 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 2em;
+}
+
+.page-header .btn {
+    margin-left: 10px; /* Espacio entre botones */
+}
+
+
+/* Data Table Styles */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden; /* Para que los bordes redondeados se apliquen a todo */
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.data-table th {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f7f9fc;
+}
+
+.data-table td .btn-sm {
+    padding: 5px 10px;
+    font-size: 0.85em;
+    margin-right: 5px;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-ex-irsi {
+    background-color: var(--danger-color);
+    color: var(--light-text-color);
+}
+
+.status-no-irsi {
+    background-color: var(--success-color);
+    color: var(--light-text-color);
+}
+
+.no-data {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-color);
+    font-size: 1.1em;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Form Container for Create/Edit */
+.form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+.form-container h2 {
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-size: 2em;
+    font-weight: 600;
+    text-align: center;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas por defecto */
+    gap: 20px; /* Espacio entre elementos */
+    margin-bottom: 30px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1; /* Ocupa todo el ancho */
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto; /* Ancho automático para checkboxes */
+}
+
+.form-actions {
+    text-align: right;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.form-actions .btn {
+    margin-left: 10px;
+}
+
+/* Detail View Styles */
+.detail-container {
+    padding: 30px 0;
+}
+
+.detail-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-top: 30px;
+}
+
+.detail-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--secondary-color);
+    font-size: 1.6em;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 30px;
+}
+
+.detail-grid > div {
+    padding: 8px 0;
+    font-size: 1.05em;
+}
+
+.detail-grid strong {
+    color: var(--text-color);
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.detail-grid .full-width {
+    grid-column: 1 / -1;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .dashboard-grid, .form-grid, .detail-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .nav-links li {
+        margin: 0 10px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .page-header h2 {
+        margin-bottom: 15px;
+    }
+}
+
+/* Excel Upload Form Styles */
+.excel-upload-form {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.excel-upload-form .form-group {
+    display: inline-block; /* Para alinear label e input si son pequeños */
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+.excel-upload-form input[type="file"] {
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    border-radius: 6px;
+    background-color: #fcfcfc;
+}
+
+.excel-format-info {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.excel-format-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.excel-format-info p.description {
+    font-size: 1em;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    text-align: left; /* Restablecer para este párrafo */
+}
+
+.excel-format-info .data-table.small-header th,
+.excel-format-info .data-table.small-header td {
+    padding: 8px 10px;
+    font-size: 0.85em;
+    white-space: nowrap; /* Evita que el texto se rompa */
+}
+
+.fraud-alerts {
+    background-color: #fcebeb; /* Fondo rojo claro */
+    border: 1px solid #e74c3c; /* Borde rojo */
+    border-radius: 8px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.fraud-alerts h3 {
+    color: var(--danger-color);
+    margin-bottom: 15px;
+}
+
+.fraud-alerts p {
+    font-size: 1em;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Para el texto de descripción general en los forms */
+p.description {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--text-color);
+}
+
+/* Role Badges */
+.role-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: var(--light-text-color);
+}
+
+.role-admin {
+    background-color: var(--primary-color); /* Azul oscuro */
+}
+
+.role-asistente {
+    background-color: var(--accent-color); /* Azul medio */
+}
+
+.role-director {
+    background-color: #27ae60; /* Verde */
+}
+
+.role-consulta {
+    background-color: #f39c12; /* Naranja */
+    color: var(--text-color); /* Texto oscuro para contraste */
+}
+
+/* --- Estilos para Badges de Tipo de Acción (Logs de Auditoría) --- */
+.action-type-badge {
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: white; /* Color de texto predeterminado para badges */
+    white-space: nowrap; /* Evita que el texto del badge se rompa en varias líneas */
+}
+
+.action-login-success { background-color: #28a745; } /* Verde para éxito */
+.action-login-failed { background-color: #dc3545; } /* Rojo para fallo */
+.action-logout { background-color: #6c757d; } /* Gris para logout */
+.action-create-becario-success, .action-create-user-success, .action-excel-becario-inserted { background-color: #007bff; } /* Azul para creación/inserción */
+.action-update-becario-success, .action-update-user-success { background-color: #ffc107; color: #333; } /* Naranja para actualización */
+.action-delete-becario-success, .action-delete-user-success { background-color: #dc3545; } /* Rojo para eliminación */
+.action-fraud-detection-create-becario, .action-fraud-detected-excel-insertion { background-color: #fd7e14; } /* Naranja oscuro para fraude */
+.action-excel-upload-summary { background-color: #17a2b8; } /* Turquesa para resumen de carga */
+.action-excel-upload-failed, .action-excel-process-error, 
+.action-create-becario-failed, .action-create-user-failed,
+.action-update-becario-failed, .action-update-user-failed,
+.action-delete-becario-failed, .action-delete-user-failed { background-color: #6f42c1; } /* Púrpura para errores específicos */
+.action-view-user-list, .action-view-audit-logs, .action-view-becario-detail, .action-view-system-reports { background-color: #6f74a7; } /* Azul violeta para vistas */
+
+
+/* --- Estilos para Reportes del Sistema --- */
+.report-section {
+    background-color: var(--card-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+.report-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.report-card {
+    background-color: var(--bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: var(--shadow-light);
+}
+
+.report-card h4 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.report-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* Ajustes para la tabla de logs para mejor visualización */
+.audit-logs-table th, .audit-logs-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    word-break: break-word; /* Romper palabras largas para no desbordar */
+}
+
+.audit-logs-table th {
+    background-color: var(--header-bg-color);
+    color: var(--header-text-color);
+    font-weight: 600;
+}
+
+.audit-logs-table tbody tr:nth-child(even) {
+    background-color: var(--secondary-bg-color);
+}

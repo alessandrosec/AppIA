@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Director{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Panel de Director</h2>
+    <p>Bienvenido, {{ current_user.username }}. Aquí puedes revisar reportes y expedientes.</p>
+
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>Ver Becarios</h3>
+            <p>Visualizar expedientes y filtrar postulantes.</p>
+            <a href="#" class="btn btn-primary">Ver Becarios</a>
+        </div>
+        <div class="card">
+            <h3>Reportes del Sistema</h3>
+            <p>Acceder a estadísticas y resúmenes de postulantes.</p>
+            <a href="#" class="btn btn-primary">Ver Reportes</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

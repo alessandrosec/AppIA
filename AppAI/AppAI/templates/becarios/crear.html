@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Nuevo Becario{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Añadir Nuevo Becario</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form method="POST">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="nombres">Nombres:</label>
+                <input type="text" id="nombres" name="nombres" value="{{ form_data.nombres if form_data else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" id="apellidos" name="apellidos" value="{{ form_data.apellidos if form_data else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" value="{{ form_data.titulo if form_data else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ form_data.fecha_nacimiento if form_data else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="correo_personal">Correo Personal:</label>
+                <input type="email" id="correo_personal" name="correo_personal" value="{{ form_data.correo_personal if form_data else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="correo_institucional">Correo Institucional:</label>
+                <input type="email" id="correo_institucional" name="correo_institucional" value="{{ form_data.correo_institucional if form_data else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" value="{{ form_data.telefono if form_data else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" value="{{ form_data.direccion if form_data else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="pais_origen">País de Origen:</label>
+                <input type="text" id="pais_origen" name="pais_origen" value="{{ form_data.pais_origen if form_data else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="nacionalidad">Nacionalidad:</label>
+                <input type="text" id="nacionalidad" name="nacionalidad" value="{{ form_data.nacionalidad if form_data else '' }}">
+            </div>
+            <div class="form-group full-width">
+                <label for="historial_ciberseguridad">Historial en Ciberseguridad:</label>
+                <textarea id="historial_ciberseguridad" name="historial_ciberseguridad" rows="5">{{ form_data.historial_ciberseguridad if form_data else '' }}</textarea>
+            </div>
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="es_ex_irsi" name="es_ex_irsi" value="1" {% if form_data and form_data.get('es_ex_irsi') %}checked{% endif %}>
+                <label for="es_ex_irsi">¿Ha pasado por IRSI anteriormente?</label>
+            </div>
+            <div class="form-group">
+                <label for="fecha_ingreso_irsi">Fecha Ingreso IRSI (si aplica):</label>
+                <input type="date" id="fecha_ingreso_irsi" name="fecha_ingreso_irsi" value="{{ form_data.fecha_ingreso_irsi if form_data else '' }}">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar Becario</button>
+            <a href="{{ url_for('becario.lista_becarios') }}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

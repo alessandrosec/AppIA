@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle de Becario{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <div class="page-header">
+        <h2>Detalle de Becario: {{ becario.nombres }} {{ becario.apellidos }}</h2>
+        <div class="actions">
+            {% if current_user.role in ['admin', 'asistente'] %}
+            <a href="{{ url_for('becario.editar_becario', becario_id=becario.id) }}" class="btn btn-warning">Editar</a>
+            {% endif %}
+            {% if current_user.role == 'admin' %}
+            <form action="{{ url_for('becario.eliminar_becario', becario_id=becario.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este becario?');">
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+            {% endif %}
+            <a href="{{ url_for('becario.lista_becarios') }}" class="btn btn-secondary">Volver a la Lista</a>
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <div class="detail-card">
+        <h3>Información Personal</h3>
+        <div class="detail-grid">
+            <div><strong>Nombres:</strong> {{ becario.nombres }}</div>
+            <div><strong>Apellidos:</strong> {{ becario.apellidos }}</div>
+            <div><strong>Título:</strong> {{ becario.titulo or 'N/A' }}</div>
+            <div><strong>Fecha de Nacimiento:</strong> {{ becario.fecha_nacimiento.strftime('%Y-%m-%d') if becario.fecha_nacimiento else 'N/A' }}</div>
+            <div><strong>Correo Personal:</strong> {{ becario.correo_personal or 'N/A' }}</div>
+            <div><strong>Correo Institucional:</strong> {{ becario.correo_institucional or 'N/A' }}</div>
+            <div><strong>Teléfono:</strong> {{ becario.telefono or 'N/A' }}</div>
+            <div><strong>Dirección:</strong> {{ becario.direccion or 'N/A' }}</div>
+            <div><strong>País de Origen:</strong> {{ becario.pais_origen or 'N/A' }}</div>
+            <div><strong>Nacionalidad:</strong> {{ becario.nacionalidad or 'N/A' }}</div>
+        </div>
+
+        <h3>Historial y Estado</h3>
+        <div class="detail-grid">
+            <div class="full-width"><strong>Historial en Ciberseguridad:</strong> <br>{{ becario.historial_ciberseguridad or 'N/A' }}</div>
+            <div>
+                <strong>¿Ha pasado por IRSI?:</strong>
+                {% if becario.es_ex_irsi %}
+                    <span class="status-badge status-ex-irsi">Sí</span>
+                {% else %}
+                    <span class="status-badge status-no-irsi">No</span>
+                {% endif %}
+            </div>
+            <div><strong>Fecha Ingreso IRSI:</strong> {{ becario.fecha_ingreso_irsi.strftime('%Y-%m-%d') if becario.fecha_ingreso_irsi else 'N/A' }}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
